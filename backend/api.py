@@ -13,6 +13,21 @@ from .repository import ResearchRepository
 class ApiHandler(BaseHTTPRequestHandler):
     repository = None
 
+    def set_cors_headers(self):
+        origin = self.headers.get("Origin")
+        if origin:
+            self.send_header("Access-Control-Allow-Origin", origin)
+        else:
+            self.send_header("Access-Control-Allow-Origin", "*")
+        self.send_header("Access-Control-Allow-Methods", "GET, POST, PUT, PATCH, DELETE, OPTIONS")
+        self.send_header("Access-Control-Allow-Headers", "Content-Type, Authorization")
+        self.send_header("Access-Control-Allow-Credentials", "true")
+
+    def do_OPTIONS(self):
+        self.send_response(204)
+        self.set_cors_headers()
+        self.end_headers()
+
     def send_json(self, payload, status=200):
         import datetime
         response = {
@@ -23,6 +38,7 @@ class ApiHandler(BaseHTTPRequestHandler):
         self.send_response(status)
         self.send_header("Content-Type", "application/json; charset=utf-8")
         self.send_header("Cache-Control", "no-store")
+        self.set_cors_headers()
         self.send_header("Content-Length", str(len(body)))
         self.end_headers()
         self.wfile.write(body)

@@ -5,13 +5,35 @@ const escapeHtml = (value) => String(value ?? "").replace(/[&<>"']/g, (char) => 
 }[char]));
 const formatStatus = (value) => String(value || "planning").replace(/_/g, " ").replace(/\b\w/g, (char) => char.toUpperCase());
 
+const API_BASE_URL = window.APP_CONFIG?.apiUrl || (window.location.hostname === "localhost" || window.location.hostname === "127.0.0.1" ? "" : (window.localStorage.getItem('API_BASE_URL') || ""));
+
 async function request(path, options = {}) {
-  const response = await fetch(path, options);
-  const payload = await response.json();
-  if (!response.ok) {
-    throw new Error(payload.error || payload.data?.error || payload.data?.message || "Request failed.");
+  const fullPath = path.startsWith("http") ? path : `${API_BASE_URL}${path}`;
+  let response;
+  try {
+    response = await fetch(fullPath, options);
+  } catch (err) {
+    throw new Error(`Network error: Could not reach API at ${fullPath}`);
   }
-  return payload.data !== undefined ? payload.data : payload;
+  
+  let payload;
+  const contentType = response.headers.get("content-type");
+  if (contentType && contentType.includes("application/json")) {
+    try {
+      payload = await response.json();
+    } catch (err) {
+      throw new Error(`Invalid JSON response from ${fullPath}`);
+    }
+  } else {
+    const text = await response.text();
+    if (!response.ok) throw new Error(`API Error (${response.status}): ${text.substring(0, 100)}`);
+    return text; // Return raw text if not JSON and status is OK
+  }
+
+  if (!response.ok) {
+    throw new Error(payload?.error || payload?.data?.error || payload?.data?.message || payload?.message || `API Error: ${response.status} ${response.statusText}`);
+  }
+  return payload?.data !== undefined ? payload.data : payload;
 }
 
 function showToast(message, error = false) {

@@ -1,0 +1,36 @@
+# OS / editor
+Thumbs.db
+Desktop.ini
+.vscode/
+.idea/
+*.swp
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+
+# Node
+node_modules/
+dist/
+
+# Office temp files
+~$*
+*.tmp
+
+# Research artifacts that are too large or private
+archive/parked-private/
+*.bak
+.drafts/
+
+# Local config / secrets
+.env
+secrets/
+*.err
+*.out
+*.pid
+*.pdf
+*.txt
+!requirements.txt
+

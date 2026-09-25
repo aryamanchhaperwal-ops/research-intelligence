@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Research Intelligence</title>
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#"><span class="brand-mark">RI</span><span>Research<br><strong>Intelligence</strong></span></a>
+      <nav>
+        <p class="nav-label">Workspace</p>
+        <a class="nav-link active" href="#dashboard" data-view="dashboard"><span class="nav-icon">▦</span><span>Dashboard</span></a>
+        <div class="nav-group">
+          <p class="nav-parent"><span class="nav-icon">◫</span><span>Research projects</span><span class="nav-chevron">⌄</span></p>
+          <a class="nav-sublink" href="#projects" data-view="projects">All projects</a>
+          <a class="nav-sublink" href="#projects" data-view="projects" data-filter="active">Active</a>
+          <a class="nav-sublink" href="#projects" data-view="projects" data-filter="completed">Completed</a>
+        </div>
+        <p class="nav-label">Research</p>
+        <a class="nav-link" href="#ai-research" data-view="ai-research"><span class="nav-icon">✧</span><span>Research assistant</span><small>Beta</small></a>
+        <a class="nav-link" href="#sources" data-view="sources"><span class="nav-icon">⌁</span><span>Sources</span></a>
+        <a class="nav-sublink standalone" href="#sources" data-view="sources">Evidence</a>
+        <a class="nav-link" href="#findings" data-view="findings"><span class="nav-icon">✦</span><span>Findings</span></a>
+        <a class="nav-sublink standalone" href="#findings" data-view="findings">Insights</a>
+        <p class="nav-label">Knowledge graph</p>
+        <a class="nav-link" href="#graph" data-view="graph"><span class="nav-icon">◎</span><span>Graph explorer</span></a>
+        <a class="nav-sublink standalone" href="#graph" data-view="graph">Entities</a>
+        <a class="nav-sublink standalone" href="#graph" data-view="graph">Relationships</a>
+        <p class="nav-label">Reports</p>
+        <a class="nav-link" href="#reports" data-view="reports"><span class="nav-icon">▤</span><span>Reports</span></a>
+        <a class="nav-sublink standalone" href="#reports" data-view="reports">Project brief</a>
+        <p class="nav-label">Administration</p>
+        <a class="nav-link" href="#team" data-view="placeholder" data-label="Team"><span class="nav-icon">♧</span><span>Team</span></a>
+        <a class="nav-link" href="#settings" data-view="settings"><span class="nav-icon">⚙</span><span>Settings</span></a>
+        <a class="nav-sublink standalone" href="#audit-log" data-view="placeholder" data-label="Audit log">Audit log</a>
+      </nav>
+      <div class="sidebar-footer"><span class="status-dot"></span> Neo4j workspace<br><small>Local development</small></div>
+    </aside>
+    <main class="main">
+      <header class="topbar"><div class="breadcrumb">Workspace <span>/</span> <strong id="view-name">Dashboard</strong></div><div class="user-chip">RI <span>Research workspace</span></div></header>
+      <div id="mode-banner" class="mode-banner" hidden></div>
+      <div id="toast" class="toast" hidden></div>
+      <section id="dashboard-view" class="view">
+        <div class="page-heading"><div><p class="eyebrow">RESEARCH OPERATIONS</p><h1>Research intelligence workspace</h1><p class="subheading">Organize questions, sources, findings, and relationships into connected knowledge.</p></div><button class="button primary" data-open="project-dialog">＋ New project</button></div>
+        <div id="metrics" class="metrics"><div class="metric skeleton-card"></div><div class="metric skeleton-card"></div><div class="metric skeleton-card"></div><div class="metric skeleton-card"></div><div class="metric skeleton-card"></div></div>
+        <div class="content-grid"><section class="card"><div class="card-header"><div><h2>Recent projects</h2><p>Continue where your team left off.</p></div><a href="#projects" data-view="projects">View all</a></div><div id="recent-projects"></div></section><section class="card"><div class="card-header"><div><h2>Recent findings</h2><p>Latest evidence captured in the graph.</p></div><a href="#findings" data-view="findings">View all</a></div><div id="recent-findings"></div></section></div>
+        <section class="card activity-card"><div class="card-header"><div><p class="eyebrow">WORKSPACE PULSE</p><h2>Research activity</h2><p>Keep momentum across your intelligence workflow.</p></div><span class="activity-live"><span class="status-dot"></span> Live from graph</span></div><div class="activity-track"><div class="activity-step complete"><span>1</span><div><b>Projects organized</b><small>Questions have a home in the workspace.</small></div></div><div class="activity-step"><span>2</span><div><b>Evidence connected</b><small>Sources and findings become reusable context.</small></div></div><div class="activity-step"><span>3</span><div><b>Insights ready to share</b><small>Build toward reports and client deliverables.</small></div></div></div></section>
+        <section class="card ai-callout"><div class="ai-icon">✧</div><div><p class="eyebrow">AI RESEARCH ASSISTANT</p><h2>Start with a question</h2><p>Explore your research context with an AI-ready workflow.</p></div><button class="button secondary" data-view="ai-research">Ask a question <span>→</span></button></section>
+      </section>
+      <section id="projects-view" class="view" hidden><div class="page-heading"><div><p class="eyebrow">WORKSPACE</p><h1>Research projects</h1><p class="subheading">Organize questions, evidence, and insight in one place.</p></div><button class="button primary" data-open="project-dialog">＋ New project</button></div><div id="project-list" class="project-list"></div></section>
+      <section id="project-view" class="view" hidden><button class="back-link" data-view="projects">← All projects</button><div id="project-header"></div><div class="workspace-tabs"><button class="tab active" data-tab="overview">Overview</button><button class="tab" data-tab="sources">Sources</button><button class="tab" data-tab="findings">Findings</button><button class="tab" data-tab="entities">Entities</button><button class="tab" data-tab="relationships">Relationships</button><button class="tab" data-tab="activity">Activity</button></div><div id="project-content"></div></section>
+      <section id="sources-view" class="view" hidden><div class="page-heading"><div><p class="eyebrow">EVIDENCE LIBRARY</p><h1>Sources</h1><p class="subheading">Sources are managed within their research projects.</p></div></div><div id="sources-list" class="card"></div></section>
+      <section id="findings-view" class="view" hidden><div class="page-heading"><div><p class="eyebrow">SYNTHESIS</p><h1>Findings</h1><p class="subheading">Evidence-backed insights across your workspace.</p></div></div><div id="findings-list" class="card"></div></section>
+      <section id="reports-view" class="view" hidden><div class="page-heading"><div><p class="eyebrow">DELIVERABLES</p><h1>Reports</h1><p class="subheading">Project briefings assembled from the real sources, findings, and graph data.</p></div></div><div id="reports-list" class="card"></div></section>
+      <section id="graph-view" class="view" hidden>
+        <div class="page-heading"><div><p class="eyebrow">CONNECTED KNOWLEDGE</p><h1>Knowledge graph</h1><p class="subheading">Explore how sources, findings, and entities are connected with full evidence traceability.</p></div>
+          <span class="pill" id="graph-mode-badge"></span>
+        </div>
+        <div id="graph-error" class="card empty-state" hidden></div>
+        <div id="graph-explorer" hidden>
+          <div class="graph-toolbar">
+            <label class="graph-project-picker">Project
+              <select id="graph-project-select"></select>
+            </label>
+            <input id="graph-search" type="search" placeholder="Search entities…">
+            <label class="filter-select">Node type
+              <select id="graph-node-type-filter"></select>
+            </label>
+            <label class="filter-select">Relationship
+              <select id="graph-rel-type-filter"></select>
+            </label>
+            <button class="button secondary" id="graph-reset-view" title="Reset view">⟳ Reset</button>
+            <button class="button secondary" id="graph-fit-view" title="Fit graph to screen">⛶ Fit</button>
+            <label class="check-label"><input type="checkbox" id="graph-show-labels" checked> Labels</label>
+          </div>
+          <div id="graph-stats" class="graph-stats"></div>
+          <div class="graph-stage">
+            <canvas id="graph-canvas"></canvas>
+            <div id="graph-hover" class="graph-hover" hidden></div>
+            <div id="graph-detail" class="graph-detail" hidden></div>
+          </div>
+        </div>
+        <div id="graph-list" class="card empty-state">Select a project workspace to explore its graph.</div>
+      </section>
+      <section id="ai-research-view" class="view" hidden><div class="page-heading"><div><p class="eyebrow">INTELLIGENCE LAYER · BETA</p><h1>AI research</h1><p class="subheading">A provider-neutral foundation for assisted research workflows.</p></div></div><div class="card ai-panel"><div class="ai-icon large">✧</div><h2>Ask a research question</h2><p class="muted">Choose an action. Provider credentials are configured server-side and never exposed to the browser.</p><form id="ai-form"><textarea name="question" rows="5" placeholder="Ask a research question..." required></textarea><div class="action-row"><button class="button primary" data-ai-action="analyze">Analyze</button><button class="button secondary" data-ai-action="find-sources">Find sources</button><button class="button secondary" data-ai-action="generate-findings">Generate findings</button></div></form><div id="ai-result"></div></div></section>
+      <section id="settings-view" class="view" hidden><div class="page-heading"><div><p class="eyebrow">CONFIGURATION</p><h1>Settings</h1><p class="subheading">Workspace configuration and integrations.</p></div></div><div class="card settings-card"><h2>Graph database</h2><p class="muted">Neo4j is the system of record for projects, evidence, findings, entities, and relationships.</p><div class="setting-row"><span>Connection status</span><span class="pill" id="connection-status">Checking...</span></div><div class="setting-row"><span>AI provider</span><span class="pill neutral">Not configured</span></div></div></section>
+      <section id="placeholder-view" class="view" hidden><div class="page-heading"><div><p class="eyebrow">ROADMAP</p><h1 id="placeholder-title">Coming soon</h1><p class="subheading">This workspace capability is planned for a future release.</p></div></div><div class="card empty-state roadmap-state"><div class="roadmap-icon">✦</div><h2 id="placeholder-heading">Coming soon</h2><p id="placeholder-copy">The navigation is ready for this capability, but no backend functionality is being simulated.</p></div></section>
+    </main>
+  </div>
+  <dialog id="login-dialog">
+    <form method="dialog" id="login-form">
+      <div class="dialog-heading">
+        <h2 id="login-dialog-title">Research Intelligence</h2>
+        <button value="cancel" class="icon-button">×</button>
+      </div>
+      <p class="muted" style="text-align:center;margin-bottom:24px">Please sign in to access your research workspace.</p>
+      <label>Username<input name="username" required placeholder="admin"></label>
+      <label>Password<input name="password" type="password" required placeholder="••••••••"></label>
+      <div class="dialog-actions">
+        <button value="cancel" class="button secondary">Cancel</button>
+        <button class="button primary">Sign in</button>
+      </div>
+    </form>
+  </dialog>
+  <dialog id="project-dialog"><form method="dialog" id="project-form"><div class="dialog-heading"><h2 id="project-dialog-title">Create a research project</h2><button value="cancel" class="icon-button">×</button></div><label>Project name<input name="name" required maxlength="160" placeholder="e.g. AI in healthcare"></label><label>Client / organization<input name="clientName" maxlength="240" placeholder="e.g. Acme Corporation"></label><label>Domain<select name="domain" required><option value="">Choose a domain</option><option value="technology">Technology</option><option value="society">Society</option><option value="environment">Environment</option><option value="esg">ESG</option><option value="culture">Culture</option><option value="business">Business</option><option value="other">Other</option></select></label><label>Project status<select name="status"><option value="planning">Planning</option><option value="active">Active</option><option value="on_hold">On Hold</option><option value="completed">Completed</option></select></label><label>Primary research question<input name="researchQuestion" required maxlength="1000" placeholder="What should this research answer?"></label><label>Project description<textarea name="description" maxlength="2000" rows="3" placeholder="What is the context and intended outcome?"></textarea></label><label>Project objectives<textarea name="objectives" maxlength="3000" rows="3" placeholder="What decisions or outcomes should this work support?"></textarea></label><div class="dialog-actions"><button value="cancel" class="button secondary">Cancel</button><button class="button primary">Create project</button></div></form></dialog>
+  <dialog id="source-dialog"><form method="dialog" id="source-form"><div class="dialog-heading"><h2>Add and ingest a source</h2><button value="cancel" class="icon-button">×</button></div><label>Source title<input name="title" required maxlength="300"></label><label>URL (optional when a document is selected)<input name="url" type="url" maxlength="2000" placeholder="https://..."></label><div class="form-grid"><label>Type<select name="kind"><option value="article">Article</option><option value="research-paper">Research paper</option><option value="report">Report</option><option value="dataset">Dataset</option><option value="government">Government source</option><option value="organization">Organization source</option><option value="web-page">Web page</option><option value="other">Other</option></select></label><label>Publication date<input name="publicationDate" maxlength="40" placeholder="YYYY-MM-DD"></label></div><div class="form-grid"><label>Author<input name="author" maxlength="200"></label><label>Publisher<input name="publisher" maxlength="200"></label></div><label>Description<textarea name="description" maxlength="1000" rows="2"></textarea></label>  <label>Document file (optional)<input name="documentFile" type="file" accept=".pdf,.txt,.md,.html,.htm,application/pdf,text/plain,text/markdown,text/html"></label><label>Document text (optional; leave blank to retrieve the URL)<textarea name="content" maxlength="200000" rows="6" placeholder="Paste the source text to ingest it, or leave blank to retrieve the public URL."></textarea></label><div class="dialog-actions"><button value="cancel" class="button secondary">Cancel</button><button class="button primary">Ingest source</button></div></form></dialog>
+  <dialog id="source-detail-dialog"><div class="dialog-heading"><h2>Source detail</h2><button data-close-dialog class="icon-button">×</button></div><div id="source-detail-content"><p>Loading…</p></div><div class="dialog-actions"><button data-close-dialog class="button secondary">Close</button></div></dialog>
+  <dialog id="finding-dialog"><form method="dialog" id="finding-form"><div class="dialog-heading"><h2>Add a finding</h2><button value="cancel" class="icon-button">×</button></div><label>Finding title<input name="title" required maxlength="300"></label><label>Finding text<textarea name="text" required maxlength="5000" rows="5"></textarea></label><label>Source URL (optional)<input name="source" type="url"></label><div class="dialog-actions"><button value="cancel" class="button secondary">Cancel</button><button class="button primary">Save finding</button></div></form></dialog>
+  <script src="/app.js"></script>
+</body>
+</html>

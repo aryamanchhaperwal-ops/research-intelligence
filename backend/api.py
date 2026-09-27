@@ -53,6 +53,7 @@ class ApiHandler(BaseHTTPRequestHandler):
     def _authenticate(self):
         # Bypass authentication for local development
         return {"sub": "local-developer"}
+    
 
 
     def error(self, error):

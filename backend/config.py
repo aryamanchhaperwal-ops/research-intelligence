@@ -42,7 +42,7 @@ class Settings:
     def from_environment(cls):
         load_env()
         return cls(
-            host=os.getenv("APP_HOST", "localhost"),
+            host=os.getenv("APP_HOST", "0.0.0.0"),
             port=int(os.getenv("PORT", "8000")),
             neo4j_uri=http_uri(os.getenv("NEO4J_URI", "bolt://127.0.0.1:7687")),
             neo4j_user=os.getenv("NEO4J_USERNAME", os.getenv("NEO4J_USER", "neo4j")),

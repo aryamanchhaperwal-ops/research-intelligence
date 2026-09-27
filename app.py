@@ -21,7 +21,13 @@ def add_finding(slug, data):
 
 
 if __name__ == "__main__":
-    initialize_schema(client)
+    import traceback
+    try:
+        initialize_schema(client)
+    except Exception as e:
+        print(f"Warning: Could not initialize Neo4j schema: {e}")
+        # The backend will start, but API endpoints querying Neo4j will return errors.
+        
     server = create_server(settings, repository)
     print(f"Research Intelligence running at http://{settings.host}:{settings.port}")
     try:

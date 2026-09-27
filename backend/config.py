@@ -42,11 +42,11 @@ class Settings:
     def from_environment(cls):
         load_env()
         return cls(
-            host=os.getenv("APP_HOST", "0.0.0.0"),
+            host=os.getenv("APP_HOST", "0.0.0.0").strip(),
             port=int(os.getenv("PORT", "8000")),
-            neo4j_uri=http_uri(os.getenv("NEO4J_URI", "bolt://127.0.0.1:7687")),
-            neo4j_user=os.getenv("NEO4J_USERNAME", os.getenv("NEO4J_USER", "neo4j")),
-            neo4j_password=os.getenv("NEO4J_PASSWORD", ""),
-            neo4j_database=os.getenv("NEO4J_DATABASE", "neo4j"),
+            neo4j_uri=http_uri(os.getenv("NEO4J_URI", "bolt://127.0.0.1:7687").strip()),
+            neo4j_user=os.getenv("NEO4J_USERNAME", os.getenv("NEO4J_USER", "neo4j")).strip(),
+            neo4j_password=os.getenv("NEO4J_PASSWORD", "").strip(),
+            neo4j_database=os.getenv("NEO4J_DATABASE", "neo4j").strip(),
             neo4j_timeout_sec=int(os.getenv("NEO4J_TIMEOUT_SEC", "30")),
         )
